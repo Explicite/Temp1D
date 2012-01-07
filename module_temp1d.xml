@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_temp1d" default="compile.module.temp1d">
+  <dirname property="module.temp1d.basedir" file="${ant.file.module_temp1d}"/>
+  
+  <property name="module.jdk.home.temp1d" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.temp1d" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.temp1d" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.temp1d" value="${compiler.args}"/>
+  
+  <property name="temp1d.output.dir" value="${module.temp1d.basedir}/out/production/Temp1D"/>
+  <property name="temp1d.testoutput.dir" value="${module.temp1d.basedir}/out/test/Temp1D"/>
+  
+  <path id="temp1d.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="temp1d.module.production.classpath">
+    <path refid="${module.jdk.classpath.temp1d}"/>
+    <path refid="library.jama-1.0.2.classpath"/>
+  </path>
+  
+  <path id="temp1d.runtime.production.module.classpath">
+    <pathelement location="${temp1d.output.dir}"/>
+    <path refid="library.jama-1.0.2.classpath"/>
+  </path>
+  
+  <path id="temp1d.module.classpath">
+    <path refid="${module.jdk.classpath.temp1d}"/>
+    <pathelement location="${temp1d.output.dir}"/>
+    <path refid="library.jama-1.0.2.classpath"/>
+  </path>
+  
+  <path id="temp1d.runtime.module.classpath">
+    <pathelement location="${temp1d.testoutput.dir}"/>
+    <pathelement location="${temp1d.output.dir}"/>
+    <path refid="library.jama-1.0.2.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.temp1d">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.temp1d">
+    <patternset refid="excluded.from.module.temp1d"/>
+  </patternset>
+  
+  <path id="temp1d.module.sourcepath">
+    <dirset dir="${module.temp1d.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.temp1d" depends="compile.module.temp1d.production,compile.module.temp1d.tests" description="Compile module Temp1D"/>
+  
+  <target name="compile.module.temp1d.production" depends="register.custom.compilers" description="Compile module Temp1D; production classes">
+    <mkdir dir="${temp1d.output.dir}"/>
+    <javac2 destdir="${temp1d.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.temp1d}/javac">
+      <compilerarg line="${compiler.args.temp1d}"/>
+      <bootclasspath refid="temp1d.module.bootclasspath"/>
+      <classpath refid="temp1d.module.production.classpath"/>
+      <src refid="temp1d.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.temp1d"/>
+    </javac2>
+    
+    <copy todir="${temp1d.output.dir}">
+      <fileset dir="${module.temp1d.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.temp1d.tests" depends="register.custom.compilers,compile.module.temp1d.production" description="compile module Temp1D; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.temp1d" description="cleanup module">
+    <delete dir="${temp1d.output.dir}"/>
+    <delete dir="${temp1d.testoutput.dir}"/>
+  </target>
+</project>
