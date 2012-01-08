@@ -1,9 +1,11 @@
+/**
+ * Author: Jan Paw
+ * Date: 07.01.12
+ * Time: 17:52
+ */
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * @author Jan Paw
- */
 public class Temp1D {
 
     private double Rmin, Rmax, AlfaAir, TempBegin, t1, t2, Tau1, Tau2, C, Ro,
@@ -12,7 +14,7 @@ public class Temp1D {
             aE, aB;
     private double[][] H;
     private int nh, ne, Np, nTime;
-    private Solver noweZadanieMES;
+
 
     /**
      * Konstruktor klasy {@link Temp1D}.
@@ -28,7 +30,6 @@ public class Temp1D {
      * @param C         -> wsp. ciepła właściwego [J/kg*K]
      * @param Ro        -> gęstość materiału [kg/m3]
      * @param K         -> wsp. przewodzenia ciepła [W/m*K]
-     * @author Jan Paw
      */
     public Temp1D(double Rmin, double Rmax, double AlfaAir, double TempBegin,
                   double t1, double t2, double C, double Ro, double K, double Tau1,
@@ -47,8 +48,8 @@ public class Temp1D {
         this.Ro = Ro;
         this.K = K;
 
-        E = new double[2]; // wagi
-        W = new double[2]; // pkt calkowania w ukladzie lokalnym
+        E = new double[2]; // pkt calkowania w ukladzie lokalnym
+        W = new double[2]; // wagi
         N1 = new double[2]; // funkcje ksztalt
         N2 = new double[2]; // funkcje ksztalt
         r = new double[2]; // wsp pkt w ukladzie gobalnym
@@ -86,6 +87,7 @@ public class Temp1D {
     }
 
     public void count() throws IOException {
+        Solver noweZadanieMES;
         String curDir = System.getProperty("user.dir");
         FileWriter fr = new FileWriter(
                 curDir + "/OutputData.txt");
