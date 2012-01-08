@@ -4,4 +4,12 @@ Projekt 2 z MES
 
 Model przepływu ciepła w stanie nieustalonym w obszarze osiowosymetrycznym, jednowymiarowym.
 
+* Jak tego użyć?
+
+  1.
+    - kompilacja źródła
+    - pobranie gotowego pliku Temp1D.jar wraz z plikiem konfiguracyjnym
+  2. 
+    - java -jar Temp1D.jar <scierzka_do_pliku_z_danymi>
+
 Jan Paw
